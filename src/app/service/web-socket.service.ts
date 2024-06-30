@@ -1,12 +1,13 @@
 import {Injectable} from "@angular/core";
-import {Client} from "@stomp/stompjs";
+import {Client, IFrame} from "@stomp/stompjs";
+import {IChatMessage} from "../model/chat-message.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatWebSocketService {
-  private readonly WS_ENDPOINT = 'ws://localhost:8080/gs-guide-websocket';
-  private _messages: any[] = [];
+  private readonly WS_ENDPOINT = 'ws://localhost:8080/ws';
+  private _messages: IChatMessage[] = [];
   private client!: Client;
 
   get messages(): any[] {
@@ -20,9 +21,8 @@ export class ChatWebSocketService {
   init(): void {
     this.client = new Client({
       brokerURL: this.WS_ENDPOINT,
-      onConnect: () => {
-        this.client.subscribe('/topic/greetings', (message: { body: any; }) => {
-            console.log(`Received: ${message.body}`)
+      onConnect: (frame: IFrame) => {
+        this.client.subscribe('/topic/messages', (message: { body: any; }) => {
             this.messages = [...this.messages, message.body];
           }
         );
@@ -31,7 +31,7 @@ export class ChatWebSocketService {
     this.client.activate();
   }
 
-  sendMessage(message: string): void {
-    this.client.publish({destination: '/app/hello', body: JSON.stringify({'name': message})});
+  sendMessage(message: IChatMessage): void {
+    this.client.publish({destination: '/app/send', body: JSON.stringify(message)});
   }
 }

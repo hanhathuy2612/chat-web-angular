@@ -2,6 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ChatWebSocketService} from "./service/web-socket.service";
 import {NgForOf} from "@angular/common";
+import {MessageType} from "./model/chat-message.model";
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,15 @@ export class AppComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.webSocketService.sendMessage('Hello, WebSocket');
+    this.webSocketService.sendMessage({
+      type: MessageType.CHAT,
+      content: 'Hello, WebSocket',
+      sender: {
+        id: 1,
+        email: 'System',
+        firstName: 'Huy',
+        lastName: "Ha"
+      }
+    });
   }
 }
