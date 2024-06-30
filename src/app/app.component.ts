@@ -23,12 +23,7 @@ export class AppComponent implements OnInit {
     this.webSocketService.sendMessage({
       type: MessageType.CHAT,
       content: 'Hello, WebSocket',
-      sender: {
-        id: 1,
-        email: 'System',
-        firstName: 'Huy',
-        lastName: "Ha"
-      }
+      sender: null
     });
   }
 }

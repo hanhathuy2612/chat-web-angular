@@ -3,7 +3,7 @@ import {IUser} from "./user.model";
 export interface IChatMessage {
   type: MessageType;
   content: string;
-  sender: IUser;
+  sender?: IUser | null;
 }
 
 export enum MessageType {
