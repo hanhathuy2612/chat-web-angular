@@ -1,10 +1,16 @@
 import {IUser} from "./user.model";
 
-export interface IChatMessage {
-  type: MessageType;
-  content: string;
-  sender?: IUser | null;
+export class ChatMessage {
+
+  constructor(
+    public id: number,
+    public type: MessageType,
+    public content: string,
+    public sender?: IUser | null
+  ) {
+  }
 }
+
 
 export enum MessageType {
   CHAT = "CHAT",

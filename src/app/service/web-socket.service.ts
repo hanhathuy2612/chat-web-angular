@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Client, IFrame} from "@stomp/stompjs";
-import {IChatMessage} from "../model/chat-message.model";
+import {ChatMessage} from "../model/chat-message.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatWebSocketService {
   private readonly WS_ENDPOINT = 'ws://localhost:8080/ws';
-  private _messages: IChatMessage[] = [];
+  private _messages: ChatMessage[] = [];
   private client!: Client;
 
   get messages(): any[] {
@@ -31,7 +31,7 @@ export class ChatWebSocketService {
     this.client.activate();
   }
 
-  sendMessage(message: IChatMessage): void {
+  sendMessage(message: ChatMessage): void {
     this.client.publish({destination: '/app/send', body: JSON.stringify(message)});
   }
 }

@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
   title = 'chat-web';
   protected webSocketService = inject(ChatWebSocketService)
 
+  get messages() {
+    return this.webSocketService.messages;
+  }
+
   ngOnInit(): void {
     this.webSocketService.init();
   }
